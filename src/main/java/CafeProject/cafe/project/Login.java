@@ -23,6 +23,17 @@ public class Login {
         Login login = new Login();
         if (login.login(user, pass)) {
             System.out.println("Login successful!");
+            System.out.println("Contact information (press 1)");
+
+            Scanner scanner = new Scanner(System.in);
+            int input = scanner.nextInt();  
+
+            if (input == 1) {
+                ContactUs contact = new ContactUs();
+                System.out.println(contact.getContactInfo());
+            } else {
+                System.out.println("Invalid option. Please press 1 to see contact info.");
+            }
         } else {
             System.out.println("Invalid username or password.");
         }
