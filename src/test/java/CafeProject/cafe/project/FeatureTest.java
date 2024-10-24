@@ -38,12 +38,24 @@ public class FeatureTest {
         assertTrue(loginSuccess);
         System.setIn(sysInBackup);
     }
+    
+    @Test
+    public void testReviewDisplay() {
+        // Test that reviews are shown
+        InputStream sysInBackup = System.in; 
+        ByteArrayInputStream in = new ByteArrayInputStream("Spiderman\n123\n3\n5\n".getBytes());
+        System.setIn(in);
+
+        boolean loginSuccess = login.login("Spiderman", "123");
+        assertTrue(loginSuccess);
+        System.setIn(sysInBackup);
+    }
 
     @Test
     public void testInvalidMenuInput() {
         // Test wrong input value
         InputStream sysInBackup = System.in; 
-        ByteArrayInputStream in = new ByteArrayInputStream("Spiderman\n123\n3\n".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("Spiderman\n123\n4\n".getBytes());
         System.setIn(in);
 
         boolean loginSuccess = login.login("Spiderman", "123");
