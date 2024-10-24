@@ -29,6 +29,7 @@ public class Login {
             while (!exit) { 
                 System.out.println("View menu (press 1)");
                 System.out.println("Contact information (press 2)");
+                System.out.println("Read reviews (press 3)");
              
                 int input = in.nextInt();  
                 
@@ -65,6 +66,15 @@ public class Login {
                         continue; 
                     }
                 } 
+                else if (input == 3) {
+                    Review review = new Review();
+                    review.Reviews();
+                    System.out.println("Go back by pressing 5");
+                    int inputEsc = in.nextInt();  
+                    if (inputEsc == 5) {
+                        continue; 
+                    }
+                }
                 else {
                     System.out.println("Invalid input. Please try again.");
                 }
