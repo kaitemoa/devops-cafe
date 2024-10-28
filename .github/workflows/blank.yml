@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'adopt'  # You can also use 'temurin', 'zulu', etc.
 
       - name: Run a one-line script
         run: echo "Hello, world!"
