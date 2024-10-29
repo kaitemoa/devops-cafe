@@ -1,6 +1,5 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 23
-Class-Path: lib/http-20070405.jar
 Main-Class: CafeProject.cafe.project.CafeApp
 Created-By: Maven Integration for Eclipse
 
