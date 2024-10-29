@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public final class CafeApp {
-    public static final void main(final String[] args) {
+    public static void main(final String[] args) {
         CafeApp cafe = new CafeApp();
         cafe.createServer();
     }
@@ -69,7 +69,6 @@ public final class CafeApp {
         }
     }
 
-
     static class LoginHandler implements HttpHandler {
         private String validUsername = "Spiderman";
         private String validPassword = "123";
@@ -88,9 +87,9 @@ public final class CafeApp {
                     String response = "<h1>Invalid username or password.</h1><p><a href='/'>Try again</a></p>";
                     exchange.getResponseHeaders().add("Content-Type", "text/html");
                     exchange.sendResponseHeaders(200, response.getBytes().length);
-                    OutputStream os = exchange.getResponseBody();
-                    os.write(response.getBytes());
-                    os.close();
+                    try (OutputStream os = exchange.getResponseBody()) {
+                        os.write(response.getBytes());
+                    }
                 }
             }
         }
@@ -107,6 +106,10 @@ public final class CafeApp {
             return formData;
         }
     }
+
+    // Other handlers (MainHandler, MenuHandler, ContactHandler, ReviewHandler) remain unchanged
+
+}
 
     static class MainHandler implements HttpHandler {
         @Override
