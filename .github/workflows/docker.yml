@@ -52,7 +52,7 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -vvv -o StrictHostKeyChecking=no rintajom@172.22.96.1 "docker pull rintajom/cafe.project:latest && \
+          ssh -vvv -o StrictHostKeyChecking=no rintajom@193.166.180.48 "docker pull rintajom/cafe.project:latest && \
           docker stop cafe-app || true && \
           docker rm cafe-app || true && \
           docker run -d --name cafe-app -p 8080:8080 rintajom/cafe.project:latest"
