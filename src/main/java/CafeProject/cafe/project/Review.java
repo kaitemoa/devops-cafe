@@ -15,4 +15,8 @@ public class Review {
 			System.out.println(review);
 		}
 	}
+	
+    public String[] getReviews() {
+        return reviews;
+    }
 }

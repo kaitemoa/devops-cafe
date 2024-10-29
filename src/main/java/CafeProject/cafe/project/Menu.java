@@ -17,4 +17,13 @@ public class Menu {
             System.out.println(bakedGood);
         }
     }
+    
+
+    public String[] getCoffees() {
+        return coffees;
+    }
+
+    public String[] getBakedGoods() {
+        return bakedGoods;
+    }
 }
