@@ -1,66 +1,48 @@
-name: Java Application CI/CD
+name: Deployment
 
-on: 
-  push: 
-    branches: 
-      - M_actions 
-  pull_request: 
-    branches: 
-      - M_actions 
-  workflow_dispatch: 
+on:
+  push:
+    branches:
+      - M_actions
 
-jobs: 
-  build: 
-    runs-on: ubuntu-latest 
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: production
+      cancel-in-progress: true
 
-    steps: 
-      - name: Checkout code 
-        uses: actions/checkout@v2 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up JDK 8 
-        uses: actions/setup-java@v2 
-        with: 
-          java-version: '8' 
-          distribution: 'adopt' 
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
 
-      - name: Build with Maven 
-        run: mvn clean package 
+      - name: Build with Maven
+        run: mvn clean package
 
-      - name: Log in to Docker Hub 
-        uses: docker/login-action@v2 
-        with: 
-          username: ${{ secrets.DOCKER_USERNAME }} 
-          password: ${{ secrets.DOCKER_PASSWORD }} 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image 
-        run: | 
-          docker build -t rintajom/cafe.project:latest . 
-          docker push rintajom/cafe.project:latest 
+      - name: Build Docker image
+        run: |
+          docker build -t rintajom/cafe.project:latest .
 
-      - name: Deploy to Server 
-        env: 
-          HOST: ${{ secrets.DEPLOY_HOST }}
-          USER: ${{ secrets.DEPLOY_USER }}
-          KEY: ${{ secrets.DEPLOY_KEY_3 }}
-        run: | 
-          echo "$KEY" > private_key.pem 
-          chmod 600 private_key.pem 
-          ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST << 'EOF' 
-            # Stop and remove the existing container if it's running 
-            if [ "$(docker ps -q -f name=cafeapp-container)" ]; then 
-                echo "Stopping existing container..." 
-                docker stop cafeapp-container 
-                docker rm cafeapp-container 
-            fi 
-             
-            # Pull the latest image from Docker Hub 
-            echo "Pulling the latest Docker image..." 
-            docker pull rintajom/cafe.project:latest 
-             
-            # Run the Docker container in detached mode 
-            echo "Starting the container..." 
-            docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest 
-             
-            # Optional: Display application URL 
-            echo "CafeApp is now running at http://$HOST:8080" 
-          EOF 
+      - name: Push Docker image
+        run: |
+          docker push rintajom/cafe.project:latest
+
+      - name: Deploy docker image
+        run: |
+          ssh -o StrictHostKeyChecking=no rintajom@193.166.180.48 'docker pull rintajom/cafe.project:latest && \
+          docker stop cafeapp-container || true && \
+          docker rm cafeapp-container || true && \
+          docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest'
