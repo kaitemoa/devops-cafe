@@ -40,7 +40,14 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    <groupId>com.sun.net.httpserver</groupId>
+    <artifactId>http</artifactId>
+    <version>20070405</version>
+</dependency>
+
   </dependencies>
+  
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

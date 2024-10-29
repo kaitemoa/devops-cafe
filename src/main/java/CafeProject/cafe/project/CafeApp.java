@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public final class CafeApp {
-    public static void main(final String[] args) {
+    public static final void main(final String[] args) {
         CafeApp cafe = new CafeApp();
         cafe.createServer();
     }
@@ -107,10 +107,6 @@ public final class CafeApp {
         }
     }
 
-    // Other handlers (MainHandler, MenuHandler, ContactHandler, ReviewHandler) remain unchanged
-
-}
-
     static class MainHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
@@ -126,17 +122,16 @@ public final class CafeApp {
                 """;
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
         }
     }
 
     static class MenuHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Menu menu = new Menu();
-
+            Menu menu = new Menu(); // Ensure Menu class is implemented
             String coffeesHtml = "<h2>Coffees:</h2><ul>" +
                     Arrays.stream(menu.getCoffees()).map(item -> "<li>" + item + "</li>").collect(Collectors.joining()) +
                     "</ul>";
@@ -147,30 +142,29 @@ public final class CafeApp {
             String response = "<html><body><h1>Our Menu</h1>" + coffeesHtml + bakedGoodsHtml + "</body></html>";
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
         }
     }
 
     static class ContactHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            ContactUs contact = new ContactUs();
+            ContactUs contact = new ContactUs(); // Ensure ContactUs class is implemented
             String response = "<html><body><h1>Contact Us</h1><p>" + contact.getContactInfo().replace("\n", "<br>") + "</p></body></html>";
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
         }
     }
 
     static class ReviewHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Review review = new Review();
-
+            Review review = new Review(); // Ensure Review class is implemented
             String reviewsHtml = "<h2>Customer Reviews:</h2><ul>" +
                     Arrays.stream(review.getReviews()).map(item -> "<li>" + item + "</li>").collect(Collectors.joining()) +
                     "</ul>";
@@ -178,9 +172,9 @@ public final class CafeApp {
             String response = "<html><body>" + reviewsHtml + "</body></html>";
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
         }
     }
 }
