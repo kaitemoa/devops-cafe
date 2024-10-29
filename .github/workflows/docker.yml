@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - M_actions
-  workflow_dispatch:  # Corrected indentation
+  workflow_dispatch:  # Correctly indented
 
 jobs:
   build:
