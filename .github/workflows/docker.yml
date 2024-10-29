@@ -36,23 +36,3 @@ jobs:
         run: |
           docker build -t rintajom/cafe.project:latest .
           docker push rintajom/cafe.project:latest
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY_2 }}
-
-      - name: Deploy to Server
-        run: |
-          ssh -vvv -o StrictHostKeyChecking=no rintajom@localhost "docker pull rintajom/cafe.project:latest && \
-          docker stop cafe-app || true && \
-          docker rm cafe-app || true && \
-          docker run -d --name cafe-app -p 8080:8080 rintajom/cafe.project:latest"
