@@ -34,7 +34,7 @@ jobs:
 
       - name: Pull the latest image
         run: |
-		  docker pull rintajom/cafe.project:latest
+          docker pull rintajom/cafe.project:latest
 
       - name: Stop existing container
         run: |
@@ -43,4 +43,4 @@ jobs:
 
       - name: Run new container
         run: |
-		  docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest
+          docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest
