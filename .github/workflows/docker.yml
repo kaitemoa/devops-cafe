@@ -20,8 +20,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        run: |
-		mvn clean package
+        run: mvn clean package
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -30,12 +29,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          docker build -t rintajom/cafe.project:latest .
+        run: docker build -t rintajom/cafe.project:latest .
 
       - name: Pull the latest image
-        run: |
-          docker pull rintajom/cafe.project:latest
+        run: docker pull rintajom/cafe.project:latest
 
       - name: Stop existing container
         run: |
@@ -43,5 +40,4 @@ jobs:
           docker rm cafeapp-container || true
 
       - name: Run new container
-        run: |
-          docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest
+        run: docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest
