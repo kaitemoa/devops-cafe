@@ -28,8 +28,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build Docker image
+        run: |
+          docker build -t rintajom/cafe.project:latest .
+
       - name: Pull the latest image
         run: docker pull rintajom/cafe.project:latest
+
+      - name: Stop existing container
+        run: |
+          docker stop cafeapp-container || true
+          docker rm cafeapp-container || true
 
       - name: Run new container
         run: docker run -d -p 8080:8080 --name cafeapp-container rintajom/cafe.project:latest
