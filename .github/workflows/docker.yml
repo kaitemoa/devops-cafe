@@ -1,4 +1,4 @@
-name: Java Application CI/CD
+name: Java Applications CI/CD
 
 on:
   push:
