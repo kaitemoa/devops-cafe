@@ -65,7 +65,7 @@
           			<manifest>
                 		<addClasspath>true</addClasspath>
                 		<classpathPrefix>lib/</classpathPrefix>
-                		<mainClass>CafeProject.cafe.project.Login</mainClass>
+                		<mainClass>CafeProject.cafe.project.CafeApp</mainClass>
           			</manifest>
         		</archive>
       		</configuration>
