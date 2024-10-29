@@ -110,16 +110,17 @@ public final class CafeApp {
     static class MainHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            String response = """
-                <html>
-                <body>
-                    <h1>Welcome to the Cafe</h1>
-                    <p><a href='/menu'>View Menu</a></p>
-                    <p><a href='/contact'>Contact Us</a></p>
-                    <p><a href='/reviews'>Customer Reviews</a></p>
-                </body>
-                </html>
-                """;
+        	String response = """
+        		    <html>
+        		    <body>
+        		        <h1>Welcome to the Cafe</h1>
+        		        <p><a href='/menu'>View Menu</a></p>
+        		        <p><a href='/contact'>Contact Us</a></p>
+        		        <p><a href='/reviews'>Customer Reviews</a></p>
+        		    </body>
+        		    </html>
+        		    """;
+
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
