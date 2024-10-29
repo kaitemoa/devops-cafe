@@ -3,7 +3,7 @@ name: CI/CD for docker
 on:
   push:
     branches:
-      - M_docker_final
+      - M_deploy_docker
 
 jobs:
   deploy:
