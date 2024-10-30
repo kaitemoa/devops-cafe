@@ -6,7 +6,7 @@ on:
       - M_deploy_docker
 
 jobs:
-  deploy:
+  docker-build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,3 +38,6 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push rintajom/cafe.project:latest
+
+      - name: Final completion step
+        run: echo "Docker push completed successfully"
