@@ -132,7 +132,7 @@ public final class CafeApp {
     static class MenuHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Menu menu = new Menu(); // Ensure Menu class is implemented
+            Menu menu = new Menu();
             String coffeesHtml = "<h2>Coffees:</h2><ul>" +
                     Arrays.stream(menu.getCoffees()).map(item -> "<li>" + item + "</li>").collect(Collectors.joining()) +
                     "</ul>";
@@ -152,7 +152,7 @@ public final class CafeApp {
     static class ContactHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            ContactUs contact = new ContactUs(); // Ensure ContactUs class is implemented
+            ContactUs contact = new ContactUs();
             String response = "<html><body><h1>Contact Us</h1><p>" + contact.getContactInfo().replace("\n", "<br>") + "</p></body></html>";
             exchange.getResponseHeaders().add("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.getBytes().length);
@@ -165,7 +165,7 @@ public final class CafeApp {
     static class ReviewHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            Review review = new Review(); // Ensure Review class is implemented
+            Review review = new Review();
             String reviewsHtml = "<h2>Customer Reviews:</h2><ul>" +
                     Arrays.stream(review.getReviews()).map(item -> "<li>" + item + "</li>").collect(Collectors.joining()) +
                     "</ul>";
