@@ -3,7 +3,7 @@ name: CI/CD for Docker
 on:
   push:
     branches:
-      - M_deploy_docker
+      - main
 
 jobs:
   docker-build-and-push:
@@ -41,4 +41,4 @@ jobs:
         run: docker push rintajom/cafe.project:latest
 
       - name: Final completion step
-        run: echo "Docker push completed successfully"
+        run: echo "Docker push completed successfully!"
